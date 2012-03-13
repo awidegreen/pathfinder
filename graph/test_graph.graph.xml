@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<graph height="300" width="420">
+    <node y="46" x="222" name="1" id="1"/>
+    <node y="110" x="161" name="2" id="2"/>
+    <node y="171" x="99" name="3" id="3"/>
+    <node y="228" x="38" name="4" id="4"/>
+    <node y="231" x="101" name="5" id="5"/>
+    <node y="166" x="162" name="6" id="6"/>
+    <node y="107" x="223" name="7" id="7"/>
+    <node y="109" x="285" name="8" id="8"/>
+    <node y="164" x="280" name="9" id="9"/>
+    <node y="227" x="344" name="11" id="10"/>
+    <node y="231" x="278" name="10" id="11"/>
+    <node y="170" x="345" name="12" id="12"/>
+    <edge destination="2" source="1"/>
+    <edge destination="7" source="1"/>
+    <edge destination="8" source="1"/>
+    <edge destination="1" source="2"/>
+    <edge destination="3" source="2"/>
+    <edge destination="6" source="2"/>
+    <edge destination="2" source="3"/>
+    <edge destination="4" source="3"/>
+    <edge destination="5" source="3"/>
+    <edge destination="3" source="4"/>
+    <edge destination="3" source="5"/>
+    <edge destination="2" source="6"/>
+    <edge destination="1" source="7"/>
+    <edge destination="9" source="8"/>
+    <edge destination="12" source="8"/>
+    <edge destination="1" source="8"/>
+    <edge destination="8" source="9"/>
+    <edge destination="10" source="9"/>
+    <edge destination="11" source="9"/>
+    <edge destination="9" source="10"/>
+    <edge destination="9" source="11"/>
+    <edge destination="8" source="12"/>
+</graph>

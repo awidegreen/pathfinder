@@ -1,0 +1,78 @@
+<project name="PathFinder" basedir="." default="run">
+
+	<property name="build.dir" value="build" />
+	<property name="classes.dir" value="${build.dir}/classes" />
+	<property name="dist.dir" value="dist" />
+	<property name="lib.dir" value="lib" />
+	<property name="jar.file" value="pathfinder.jar" />
+	<property name="main.class" value="net.sf.pathfinder.PathFinder" />
+
+	<path id="class.path">
+		<fileset dir="${lib.dir}" includes="**/*.jar" />
+	</path>
+
+	<target name="clean">
+		<delete dir="${build.dir}" />
+		<delete dir="${dist.dir}" />
+	</target>
+
+	<target name="init">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${dist.dir}" />
+	</target>
+
+	<target name="build" depends="init">
+		<mkdir dir="${classes.dir}" />
+		<javac destdir="${classes.dir}" classpathref="class.path">
+			<src path="src" />
+		</javac>
+	</target>
+
+	<target name="jar" depends="build">
+		<pathconvert property="mf.classpath" pathsep=" ">
+			<path refid="class.path" />
+			<mapper>
+				<chainedmapper>
+					<flattenmapper />
+					<globmapper from="*" to="libs/*" />
+				</chainedmapper>
+			</mapper>
+		</pathconvert>
+
+		<jar destfile="${build.dir}/${jar.file}">
+			<manifest>
+				<attribute name="Built-By" value="Dirk Reske, Armin Widegreen" />
+				<attribute name="Main-Class" value="${main.class}" />
+				<attribute name="Class-Path" value="${mf.classpath}" />
+			</manifest>
+			<zipfileset dir="${classes.dir}" />
+			<zipfileset dir="resources" />
+		</jar>
+
+
+	</target>
+
+	<target name="dist" depends="jar">
+		<!-- copy needed libraries -->
+		<mkdir dir="${dist.dir}/libs" />
+		<copy todir="${dist.dir}/libs" flatten="true">
+			<fileset dir="${lib.dir}" includes="**/*.jar" />
+		</copy>
+		
+		<!-- copy jar file -->
+		<copy tofile="${dist.dir}/${jar.file}" file="${build.dir}/${jar.file}"/>
+		
+		<!-- copy graph -->
+		<copy todir="${dist.dir}/graph">
+			<fileset dir="graph" />
+		</copy>
+		
+		<!-- copy startup scripts -->
+		<copy tofile="${dist.dir}/pathfinder.bat" file="misc/pathfinder.bat" />
+		<copy tofile="${dist.dir}/pathfinder.sh" file="misc/pathfinder.sh" />
+	</target>
+
+	<target name="run" depends="dist">
+		<java fork="true" jar="${dist.dir}/${jar.file}" />
+	</target>
+</project>

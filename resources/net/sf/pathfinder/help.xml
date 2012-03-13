@@ -1,0 +1,518 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<help>
+	<category name="Dialog Controls">
+		<topic title="Destination" id="destinationTextField">
+		<![CDATA[Specifies the destination of the route to calculate.<br />
+			You can either type it manually or just select it in the graph.
+			]]>
+		</topic>
+
+		<topic title="Destination" id="sourceTextField">
+		<![CDATA[
+		Specifies the source of the route to calculate.<br />
+		You can either type it manually or just select it in the graph.
+		]]>
+		</topic>
+	</category>
+	<category name="Algorithms">
+		<topic title="A* Algorithm" id="aStarAlgorithm">
+			<![CDATA[
+			<h1>A* Algorithm</h1>
+			<h2>Description</h2>
+			<p>In computer science, <b>A*</b> (pronounced "A star") is a best-first, graph search algorithm that finds the least-cost path from a given initial node to one goal node (out of one or more possible goals).</p>
+			<p>It uses a distance-plus-cost heuristic function (usually denoted f(x)) to determine the order in which the search visits nodes in the tree. The distance-plus-cost heuristic is a sum of two functions: the path-cost function (usually denoted g(x), which may or may not be a heuristic) and an admissible "heuristic estimate" of the distance to the goal (usually denoted h(x)). The path-cost function g(x) is the cost from the starting node to the current node.</p>
+			<p>Since the h(x) part of the f(x) function must be an admissible heuristic, it must not overestimate the distance to the goal. Thus for an application like routing, h(x) might represent the straight-line distance to the goal, since that is physically the smallest possible distance between any two points (or nodes for that matter).</p>
+			<p>The algorithm was first described in 1968 by Peter Hart, Nils Nilsson, and Bertram Raphael. In their paper, it was called algorithm A. Since using this algorithm yields optimal behavior for a given heuristic, it has been called A*.</p>
+			]]>
+		</topic>
+		<topic title="Hill-Climbing Algorithm" id="hillClimbingAlgorithm">
+			<![CDATA[
+			<h1>Hill-Climbing Algorithm</h1>
+			<h2>Description</h2>
+			In computer science, <b>hill climbing</b> is a mathematical optimization technique which belongs to the family of local search. It is relatively simple to implement, making it a popular first choice. Although more advanced algorithms may give better results, in some situations hill climbing works just as well.<br /><br />
+			Hill climbing can be used to solve problems that have many solutions, some of which are better than others. It starts with a random (potentially poor) solution, and iteratively makes small changes to the solution, each time improving it a little. When the algorithm cannot see any improvement anymore, it terminates. Ideally, at that point the current solution is close to optimal, but it is not guaranteed that hill climbing will ever come close to the optimal solution.<br /><br />
+			These hill climbing implementation clamps an area of the selected function (see <i>Property Climbing Function</i>) over the given graph. The <i>destination</i> of the given route is the maximum of the
+			function f(x,y)=1 - where x is the horizontal and y is the vertical alignment. The Algorithm starts from the <i>start</i>-node with a given value v=f(x,y) and climbs to next nearby-node with a greater climbing-grade
+			v'. The Algorithm terminates if v' equals the <i>destination</i>-climbing-grade. 
+			
+			<h2>Properties</h2>
+				<h3>Climbing Function</h3>
+				The <i>Climbing Function</i> Property is used to select the function for the area which is clamped over the given graph.
+				To get a right solution, the user can ajust the scaling-properties. That means, based on the fact that goal is wanted to reached,
+				the climbing-grade is 1. Therefor the given graph/image is not always the same size which is why the algorithm has to 
+				scale-down the given dimensions to a capable value.  
+				<blockquote>
+					<b><i>e^(-(x^2+y^2))</i></b><br />
+					Take the function <i>e^(-(x^2+y^2))</i> as base function for the algorithm. The optimal slacing-properties are: <i>Scale Basis: factor</i> and <i>Scale factor: 2</i>
+					<br /><br /> 
+					
+					<b><i>cos(x)*cos(y)</i></b><br />
+					Take the function <i>cos(x)*cos(y)</i> as base function for the algorithm. The optimal slacing-properties are: <i>Scale Basis: factor * 1/4*Pi</i> and <i>Scale factor: 2</i>
+					<br />
+				</blockquote>
+				
+				<h3>Scale Basis</h3>
+				Describes the basis value for the calculated scaling (mutliplication with <i>Scale Factor</i>). 
+				<blockquote>
+					<b><i>factor * 1/4*Pi</i></b><br />
+					Multiply the <i>Scale Factor</i> with 1/4*Pi.
+					<br /><br />
+					
+					<b><i>factor</i></b><br />
+					Only take the given <i>Scale Factor</i> (<i>Scale Factor</i>*1).				
+					<br />
+				</blockquote>
+				
+				<h3>Scale Factor</h3>
+				The default <i>Scale Factor</i> which is the optimal value for both <i>Climbing Function</i>s. The value is ajustable from 1 to 10000.
+				
+			<h2>Implementation</h2>
+			<ol>
+			<li>Form a one-element consisting of the root node.</li>
+			<li>Until the stack is empty or the goal has been reached, determine if the topmost element in the stack is the goal node.</li>
+				<p>2.1. If the topmost is the goal node, do nothing.</p>
+				<p>2.2. If the topmost is not the goal node, pop the topmost from the stack, <I>sort the topmost’s children, if any, by estimated hill-climbing-grade,</I> and the first elements children, if any, tothe stack.</p>
+			<li>If the goal node has been found, announce success; otherwise announce failure.</li>
+			</ol>
+			<h2>Resources</h2>
+			<ul>
+				<li>http://en.wikipedia.org/wiki/Hill_climbing</li>
+				<li>http://bradley.bradley.edu/~chris/searches.html#hc </li>
+			</ul>
+			]]>
+		</topic>
+		<topic title="British-Museum Procedure Algorithm" id="britishMuseumProcedureAlgorithm">
+			<![CDATA[
+			<h1>British-Museum Procedure Algorithm</h1>
+			<h2>Description</h2>
+			One procedure for finding the shortest path through a net is to find all possible paths and to select the best from them. This procedure is known as British Museum procedure. To find all possible paths, either a depth-first search or a breadth-first search will work, with one modification: search does not stop when the first path to the goal has been found.
+			<h2>Properties</h2>
+			<h3>Base-Algorithm</h3>
+			<blockquote>
+				<b><i>Depth-First:</i></b><br />
+				see Depth-First Search Algorithm
+				<br /><br /> 
+				<b><i>Breadth-First:</i></b> <br />
+				see Breadth-First Search Algorithm
+			</blockquote>
+			<h2>Implementation</h2>
+			<ol>
+				<li>use Base-Algorithm implementation</li>
+				<li>select the shortest path</li>
+			</ol>
+			<h2>Resources</h2>
+			<ul>
+				<li>http://bradley.bradley.edu/~chris/searches.html#bms</li>
+				<li>http://en.wikipedia.org/wiki/British_Museum_algorithm</li>
+			</ul>
+			]]>
+		</topic>
+		<topic title="Depth-First Search Algorithm" id="depthFirstAlgorithm">
+			<![CDATA[
+			<h1>Depth-First Search Algorithm</h1>
+			<h2>Description</h2>
+			Formally, <b>DFS</b> is an uninformed search that progresses by expanding the first child node of the search tree that appears and thus going deeper and deeper until a goal node is found, or until it hits a node that has no children. Then the search backtracks, returning to the most recent node it hadn't finished exploring. In a non-recursive implementation, all freshly expanded nodes are added to a LIFO stack for exploration.<br /><br />
+			Space complexity of DFS is much lower than BFS (breadth-first search). It also lends itself much better to heuristic methods of choosing a likely-looking branch. Time complexity of both algorithms are proportional to the number of vertices plus the number of edges in the graphs they traverse (O(|V| + |E|)).<br /><br />
+			In this implementation the underlying storage-datatype is an property-depending stack (see properties).
+			<h2>Properties</h2>
+			<h3>Storage Limit</h3>
+			The <i>Storage Limit</i> can use to ajust the size of the underlying storage-datatype. The default value 0 represents an infinity amount of elements.
+			<h2>Implementation</h2>
+			<ol>
+			  <li>Form a one-element stack consisting of the root node.</li>
+			  <li>Until the stack is empty or the goal has been reached, determine if the first element in the stack is the goal node.</li>
+			    <p>2.1. If the first element is the goal node, do nothing.</p>
+			    <p>2.2. If the first element is not the goal node, pop the first element from the stack and push the first element's children, if any, to the stack.</p>
+			  <li>If the goal node has been found, announce success; otherwise announce failure.</li>
+			  </ol>
+			<h2>Resources</h2>
+			<ul>
+				<li>http://bradley.bradley.edu/~chris/searches.html#dfs</li>
+				<li>http://en.wikipedia.org/wiki/Depth-first_search</li>
+			</ul>
+			]]>
+		</topic>
+		<topic title="Breadth-First Search Algorithm" id="breathFirstAlgorithm">
+			<![CDATA[
+			<h1>Breadth-First Search Algorithm</h1>
+			<h2>Description</h2>
+			<b>BFS</b> is an uninformed search method that aims to expand and examine all nodes of a graph or combinations of sequence by systematically searching through every solution. In other words, it exhaustively searches the entire graph or sequence without considering the goal until it finds it. It does not use a heuristic.<br /><br />
+			From the standpoint of the algorithm, all child nodes obtained by expanding a node are added to a FIFO queue.
+			<h2>Properties</h2>
+			<h3>Storage Limit</h3>
+			The <i>Storage Limit</i> can use to ajust the size of the underlying storage-datatype. The default value 0 represents an infinity amount of elements.
+			<h2>Implementation</h2>
+			<ol>
+			  <li>Form a one-element queue consisting of the root node.</li>
+			  <li>Until the queue is empty or the goal has been reached, determine if the first element in the queue is the goal node.</li>
+			    <p>2a. If the first element is the goal node, do nothing.</p>
+			    <p>2b. If the first element is not the goal node, poll the first element from the queue and push the first element's children, if any, to the queue.</p>
+			  <li>If the goal node has been found, announce success; otherwise announce failure.</li>
+			  </ol>
+			<h2>Resources</h2>
+			<ul>
+				<li>http://bradley.bradley.edu/~chris/searches.html#bf</li>
+				<li>http://en.wikipedia.org/wiki/Breadth-first_search</li>
+			</ul>
+			]]>
+		</topic>
+		<topic title="Beam Search Algorithm" id="beamAlgorithm">
+			<![CDATA[
+			<h1>Beam Search Algorithm</h1>
+			<h2>Description</h2>
+			<b>Beam search</b> is like breadth first search because beam search progresses level by level. Unlike breadth-first search, however, beam search only moves downward from the best w nodes at each level. The other nodes are ignored forever.<br /><br />
+			Consequently the number of nodes explored remains manageable, even if there is a great deal of branching and the search is deep. If beam search of width w is used in a tree with branching factor b, there will be only wb nodes under consideration at any depth, 
+			not the explosive number there would be if breadth-first search were used.<br/>
+			In this implementation of the <i><b>Beam Search Algorithm</i></b> the user can choose between four diffrent heuristics to calcute the next best child node.
+			  
+			<h2>Properties</h2>
+				<h3>Storage Limit</h3>
+				The <i>Storage Limit</i> can use to ajust the size of the underlying storage-datatype. The default value 0 represents an infinity amount of elements.
+			
+				<h3>Heuristic</h3>
+				<blockquote>
+					<b><i>Distance</i></b><br />
+					The <i>Distance</i> heuristic uses the linear distance from every child of the current node <b><i>n</i></b> to the end/destination 
+					node <b><i>d</i></b> to select the next best child-node <b><i>n'</i></b>. If the child node <b><i>n'</i></b> with lowest linear distance 
+					is found, set <b><i>n</i></b>=<b><i>n'</i></b> an repeat the procedure until <b><i>n'</i></b>=<b><i>d</i></b> (linear distance = 0).
+					<br /><br /> 
+					<b><i>Climbing</i></b><br />
+					The <i>Climbing</i> heuristic is derived from the hill climbing algorithm (see <b><i>Hill Climbing Algorithm</i></b>). 
+					Every Node of the graph has a climbing-grade which is calculated with the result of the function f(x,y)=e^-(x^2+y^2) where x is the horizontal and
+					y the vertical orientation. The point of origin for the coordinate system is ajusted at the postion of destination node <b><i>d</i></b>.
+					These heuristic climbs for the start node <b><i>s</i></b> to the highest node <b><i>d</i></b> where the climbing-grade equals 0.
+					<br /><br />
+					<b><i>Orientation-Preferred</i></b><br />
+					The <i>Orientation-Preferred</i> heuristic takes the cardinal direction as criterion for choosing the next child node <b><i>n'</i></b> as the next
+					current node <b><i>n</i></b>. Therefor, the user can choose between two amount of direction - see Property <i>Orientation-Direction</i> for details.
+					Based one the current node <b><i>n</i></b> the algorithm calculates the cardinal or ordnial direction for every child node <b><i>n'</i></b> to 
+					the destination node <b><i>d</i></b> . If the child node <b><i>n'</i></b> has the same cardinal or ordinal direction to the destination
+					<b><i>d</i></b> as <b><i>n</i></b>, <b><i>n'</i></b> becomes <b><i>n</i></b>. The algorithm terminates if <b><i>n'</i></b> equals the 
+					destionation node <b><i>d</i></b>.
+					<br /><br />
+					<b><i>Air Line</i></b><br />
+					The <i>Air Line</i> heuristic calculates the path which is the closest to the linear distance between the start node <b><i>s</i></b> and the
+					destination node <b><i>d</i></b>. The algorithm takes the angle between the two straight lines <b><i>n'</i></b> to <b><i>d</i></b> 
+					and <b><i>n'</i></b> to <b><i>s</i></b> (<b><i>n'</i></b> equals child node) to select the next best child node <b><i>n'</i></b> for being 
+					the next current node <b><i>n</i></b>. If the linear distance between <b><i>n'</i></b> and <b><i>d</i></b> is greater than the linear distance
+					between <b><i>n</i></b> and <b><i>d</i></b>, <b><i>n'</i></b> will be set as the last element to the underlying datatype (stack or queue), because is
+					<b><i>n'</i></b> orientated in the opposed direction.  
+					<br />
+				</blockquote>
+				
+				<h3>Orientation-Direction</h3>
+				The heuristic <i>Orientation-Preferred</i> differ between two kinds of directions. This Property is only considered, if 
+				the heuristic <i>Orientation-Preferred</i> was choosen.
+				<blockquote>
+					<b><i>4 directions</i></b><br />
+					The <i>four</i> cardinal directions are NORTH, WEST, SOUTH and EAST. To get a range for choosing right directions, the algorithm
+					divides the unit circle into four sections (four quarter):<br />
+					<b>NORTH</b>: from 45&deg; to 135&deg;<br />
+					<b>WEST</b>:  from 135&deg; to 225&deg;<br />
+					<b>SOUTH</b>: from 225&deg; to 315&deg;<br />
+					<b>EAST</b>:  from 315&deg; to 45&deg;
+					<br /><br />
+					<b><i>8 directions</i></b><br />
+					The <i>four</i> cardinal directions are NORTH, WEST, SOUTH and EAST are extended with the four ordnial or intercardinal directions. 
+					To get a range for choosing right directions, the algorithm divides the unit circle into eight sections (eight eighth):<br />
+					<b>NORTH</b>: from 67.5&deg; to 112.5&deg;<br />
+					<b>NORTH-WEST</b>:  from 112.5&deg; to 157.5&deg;<br />
+					<b>WEST</b>:  from 157.5&deg; to 202.5&deg;<br />
+					<b>SOUTH-WEST</b>: from 202.5&deg; to 247.5&deg;<br />
+					<b>SOUTH</b>: from 247.5&deg; to 292.5&deg;<br />
+					<b>SOUTH-EAST</b>:  from 292.5&deg; to 337.5&deg;<br />
+					<b>EAST</b>: from 337.5&deg; to 22.5&deg;<br />
+					<b>NORTH-EAST</b>: from 22.5&deg; to 67.5&deg;
+					<br /><br />
+				</blockquote>
+				
+				<h3>Climbing Function</h3>
+				The Property is only considered, if the <i>Heuristic</i> is selected as <i><b>Climbing</b></i>. For more information, see
+				<b><i>Hill-Climbing Algorithm</i></b>. 
+				
+				<h3>Scale Basis</h3>
+				The Property is only considered, if the <i>Heuristic</i> is selected as <i><b>Climbing</b></i>. For more information, see
+				<b><i>Hill-Climbing Algorithm</i></b>.
+				
+				<h3>Scale Factor</h3>
+				The Property is only considered, if the <i>Heuristic</i> is selected as <i><b>Climbing</b></i>. For more information, see
+				<b><i>Hill-Climbing Algorithm</i></b>.
+				
+			<h2>Implementation</h2>
+			see <b><i>Breadth-First Algorithm</i></b> with extended heuristic-implementation - see <i>Properties</i>.
+			 
+			<h2>Resources</h2>
+			<ul>
+				<li>http://bradley.bradley.edu/~chris/searches.html#bf</li>
+				<li>http://en.wikipedia.org/wiki/Beam_search</li>
+			</ul>
+			]]>
+		</topic>
+		<topic title="Depth-First Search with Heuristic Algorithm" id="depthFirstWithHeuristicAlgorithm">
+			<![CDATA[
+			<h1>Depth-First Search with Heuristic Algorithm</h1>
+			<h2>Description</h2>
+			<b>Depth-First Search with Heuristic</b> is like depth first search because because the underlying datatype is based 
+			on a stack-implementation. For more details, see <i><b>Depth-First Search Algorithm<b></i>.<br />
+			In this implementation the user can choose between four diffrent heuristics to calcute the next best child node.
+			  
+			<h2>Properties</h2>
+				<h3>Storage Limit</h3>
+				The <i>Storage Limit</i> can use to ajust the size of the underlying storage-datatype. The default value 0 represents an infinity amount of elements.
+			
+				<h3>Heuristic</h3>
+				<blockquote>
+					<b><i>Distance</i></b><br />
+					The <i>Distance</i> heuristic uses the linear distance from every child of the current node <b><i>n</i></b> to the end/destination 
+					node <b><i>d</i></b> to select the next best child-node <b><i>n'</i></b>. If the child node <b><i>n'</i></b> with lowest linear distance 
+					is found, set <b><i>n</i></b>=<b><i>n'</i></b> an repeat the procedure until <b><i>n'</i></b>=<b><i>d</i></b> (linear distance = 0).
+					<br /><br /> 
+					<b><i>Climbing</i></b><br />
+					The <i>Climbing</i> heuristic is equivalent to the hill climbing algorithm (see <b><i>Hill Climbing Algorithm</i></b>). 
+					Every Node of the graph has a climbing-grade which is calculated with the result of the function f(x,y)=e^-(x^2+y^2) where x is the horizontal and
+					y the vertical orientation. The point of origin for the coordinate system is ajusted at the postion of destination node <b><i>d</i></b>.
+					These heuristic climbs for the start node <b><i>s</i></b> to the highest node <b><i>d</i></b> where the climbing-grade equals 0.
+					<br /><br />
+					<b><i>Orientation-Preferred</i></b><br />
+					The <i>Orientation-Preferred</i> heuristic takes the cardinal direction as criterion for choosing the next child node <b><i>n'</i></b> as the next
+					current node <b><i>n</i></b>. Therefor, the user can choose between two amount of direction - see Property <i>Orientation-Direction</i> for details.
+					Based one the current node <b><i>n</i></b> the algorithm calculates the cardinal or ordnial direction for every child node <b><i>n'</i></b> to 
+					the destination node <b><i>d</i></b> . If the child node <b><i>n'</i></b> has the same cardinal or ordinal direction to the destination
+					<b><i>d</i></b> as <b><i>n</i></b>, <b><i>n'</i></b> becomes <b><i>n</i></b>. The algorithm terminates if <b><i>n'</i></b> equals the 
+					destionation node <b><i>d</i></b>.
+					<br /><br />
+					<b><i>Air Line</i></b><br />
+					The <i>Air Line</i> heuristic calculates the path which is the closest to the linear distance between the start node <b><i>s</i></b> and the
+					destination node <b><i>d</i></b>. The algorithm takes the angle between the two straight lines <b><i>n'</i></b> to <b><i>d</i></b> 
+					and <b><i>n'</i></b> to <b><i>s</i></b> (<b><i>n'</i></b> equals child node) to select the next best child node <b><i>n'</i></b> for being 
+					the next current node <b><i>n</i></b>. If the linear distance between <b><i>n'</i></b> and <b><i>d</i></b> is greater than the linear distance
+					between <b><i>n</i></b> and <b><i>d</i></b>, <b><i>n'</i></b> will be set as the last element to the underlying datatype (stack or queue), because is
+					<b><i>n'</i></b> orientated in the opposed direction.  
+					<br />
+				</blockquote>
+				
+				<h3>Orientation-Direction</h3>
+				The heuristic <i>Orientation-Preferred</i> differ between two kinds of directions. This property is only considered, if 
+				the heuristic <i>Orientation-Preferred</i> was choosen.
+				<blockquote>
+					<b><i>4 directions</i></b><br />
+					The <i>four</i> cardinal directions are NORTH, WEST, SOUTH and EAST. To get a range for choosing right directions, the algorithm
+					divides the unit circle into four sections (four quarter):<br />
+					<b>NORTH</b>: from 45&deg; to 135&deg;<br />
+					<b>WEST</b>:  from 135&deg; to 225&deg;<br />
+					<b>SOUTH</b>: from 225&deg; to 315&deg;<br />
+					<b>EAST</b>:  from 315&deg; to 45&deg;
+					<br /><br />
+					<b><i>8 directions</i></b><br />
+					The <i>four</i> cardinal directions are NORTH, WEST, SOUTH and EAST are extended with the four ordnial or intercardinal directions. 
+					To get a range for choosing right directions, the algorithm divides the unit circle into eight sections (eight eighth):<br />
+					<b>NORTH</b>: from 67.5&deg; to 112.5&deg;<br />
+					<b>NORTH-WEST</b>:  from 112.5&deg; to 157.5&deg;<br />
+					<b>WEST</b>:  from 157.5&deg; to 202.5&deg;<br />
+					<b>SOUTH-WEST</b>: from 202.5&deg; to 247.5&deg;<br />
+					<b>SOUTH</b>: from 247.5&deg; to 292.5&deg;<br />
+					<b>SOUTH-EAST</b>:  from 292.5&deg; to 337.5&deg;<br />
+					<b>EAST</b>: from 337.5&deg; to 22.5&deg;<br />
+					<b>NORTH-EAST</b>: from 22.5&deg; to 67.5&deg;
+					<br /><br />
+				</blockquote>
+				
+				<h3>Climbing Function</h3>
+				The Property is only considered, if the <i>Heuristic</i> is selected as <i><b>Climbing</b></i>. For more information, see
+				<b><i>Hill-Climbing Algorithm</i></b>. 
+				
+				<h3>Scale Basis</h3>
+				The Property is only considered, if the <i>Heuristic</i> is selected as <i><b>Climbing</b></i>. For more information, see
+				<b><i>Hill-Climbing Algorithm</i></b>.
+				
+				<h3>Scale Factor</h3>
+				The Property is only considered, if the <i>Heuristic</i> is selected as <i><b>Climbing</b></i>. For more information, see
+				<b><i>Hill-Climbing Algorithm</i></b>.
+				
+			<h2>Implementation</h2>
+			see <b><i>Depth-First Algorithm</i></b> with extended heuristic-implementation - see <i>Properties</i>.
+			 
+			<h2>Resources</h2>
+			<ul><li>http://en.wikipedia.org/wiki/Depth-first_search</li></ul>
+			]]>
+		</topic>
+		<topic title="Branch and Bound Search Algorithm" id="branchAndBoundAlgorithm">
+			<![CDATA[
+			<h1>Branch and Bound Search Algorithm</h1>
+			<h2>Description</h2>
+			The <b>Branch and Bound Search</b> is an extention of the <i><b>Depth-First Search Algorithm</b></i>. The approach of this extention is a
+			best-first implementation. That means, the next current node is determined by the shortest estimated distance from the start node to the current
+			node - for all current child nodes (extend always the shortest path). Furthermore the algorithm constructs partial paths. The paths are developed in terms of 
+			increasing cost (more accurately, in terms of non-decreasing cost). If once a path to the goal is found, it is likely that this
+			path is optimal. To change a path form "likely" to "guaranteed", one must continue generating partial paths until each 
+			has a cost greater than or equal to the path found to the goal.
+			 
+			<h2>Properties</h2>
+			
+			<h3>Storage Limit</h3>
+				The <i>Storage Limit</i> can use to ajust the size of the underlying storage-datatype. The default value 0 represents an infinity amount of elements.
+			<h3>Heuristic</h3>
+				<blockquote>
+					<b><i>none</i></b><br />
+					The actual algorithm without heuristic - see <i>Description</i>.
+					<br /><br /> 
+					<b><i>lower bound estimate</i></b><br />
+					The <i>lower bound estimate</i> heuristic is another implementation of the <i><b>A* Algorithm<b></i>. This heuristic extends the actual
+					algorithm by considering the linear distance from the currently observed node (vhild node) to the goal node. In terms of implementation, the 
+					heuristic adds the estimate linear distance to perviously calculated so far path-length. Based on this addition, the algorithm
+					selected the next current node by considering this calculated value. For more details, see <i>Implementation</i>.
+					<br /><br /> 
+					<b><i>dynamic programming principle</i></b><br />
+					The <i>dynamic programming principle</i> heuristic extends the actual algorithm by elimating redundant partial paths to 
+					the current node. If two paths reach the same node on their to the goal node, only the path with the shortest way from
+					start to the current node is extend (used for further construction). For more details, see <i>Implementation</i>.
+					<br /><br /> 
+					<b><i>both</i></b><br />
+					The <i>both</i> heuristic combines both previously discussed heuristics - <i>dynamic programming principle</i> and
+					<i>lower bound estimate</i>. This combination of algorith man heuristic is also called <i><b>Dijkstra Algorithm</b></i>.
+				</blockquote>
+			
+			<h2>Implementation</h2>
+			<ol>
+				<li>To conduct a branch-and-bound search, form a oneelement queue consisting of a zero-length path that contains only the root node.
+ 				
+ 				<li>Until the first path in the queue terminates at the goal node or the queue is empty,</li>
+ 					<p>2.1. Remove the first path from the queue; create new paths by extending the first path to all the neighbors of the terminal node.</p>
+ 					<p>2.2. Reject all new paths with loops.</p>
+ 				
+ 					<p>2.3.1. <b>none</b> or <b>lower bound estimate</b>: Add the remaining new paths, if any, to the queue.</p>
+					<p>2.3.2. <b>dynamic programming principle</b> or <b>both</b>: If two or more paths reach a common node, delete all those paths except the one that reaches the common node with the minimum cost.</p>
+					
+					<p>2.4.1. <b>none</b> or <b>dynamic programming principle</b>: Sort the entire queue by path length with least-cost paths in front.</p>
+					<p>2.4.2. <b>lower bound estimate</b> or <b>both</b>: Sort the entire queue by the sum of the path length and a lower-bound estimate of the cost remaining, with least-cost paths in front.</p>
+				<li>If the goal node is found, announce success; otherwise, announce failure.</li>
+			</ol>
+			<h2>Resources</h2>
+			<ul>
+				<li>http://www-cs.ccny.cuny.edu/~cssjl/AI1Lectures/Lesson6.doc</li>
+				<li>http://l3d.cs.colorado.edu/courses/CSCI5582-97/lectures/winston-ch5.pdf</li>
+				<li>Artificial Intelligence (3rd Edition), Patrick H. Winston, ISBN 978-0201533774, 1993</li>
+			</ul>
+			]]>
+		</topic>
+		<topic title="Depth-Limited Search Algorithm" id="depthLimitedAlgorithm">
+			<![CDATA[
+			<h1>Depth-Limited Search Algorithm</h1>
+			<h2>Description</h2>
+			Like the normal <b><i>Depth-First Algorithm</i></b>, <b>Depth Limited Search</b> is an uninformed search. It works exactly like depth-first search, 
+			but avoids its drawbacks regarding completeness by imposing a maximum limit on the depth of the search. Even if the search 
+			could still expand a vertex beyond that depth, it will not do so and thereby it will not follow infinitely deep paths or get 
+			stuck in cycles. Therefore depth-limited search will find a solution if it is within the depth limit, which guarantees at 
+			least completeness on all graphs.<br />
+			An extend version of the <b>Depth Limited Search</b> is the <b><i>Iterative Deepening Search</i></b> which is implemented as a heuristic 
+			for this algorithm.
+			
+			<h2>Properties</h2>
+			
+			<h3>Heuristic</h3>
+				<blockquote>
+					<b><i>none</i></b><br />
+					The actual algorithm without heuristic - see <i>Description</i>.
+					<br /><br /> 
+					<b><i>iterative deepening</i></b><br />
+					The <i>iterative deepening</i> heuristic represents the <b><i>Iterative Deepening Search Algorithm</i></b>. In comparison
+					to the normal depth-limited, these heuristic run repeatedly, increasing the depth limit with each iteration until it 
+					reaches <b><i>d</i></b>, the depth of the shallowest goal node. 
+				</blockquote>
+				
+			<h3>search depth</h3>
+			The <i>search depth</i> represents the search depth of the actual algorithm. This value will only considered if <i>none</i> as
+			heuristic property is selected. For more details, see Property <i>Heuristic</i>.
+			
+			<h2>Implementation</h2>
+			<ol>
+			  <li>Form a one-element stack consisting of the root node.</li>
+			  <li>Until the stack is empty, the depth-limited or the goal node has been reached, determine if the first element 
+			      in the stack is the goal node.</li>
+			   		<p>2.1. If the first element is the goal node, do nothing.</p>
+			    	<p>2.2. If the first element is not the goal node, pop the first element from the stack and push the first element's children, if any, to the stack.</p>
+			  <li>If the goal node has been found, announce success; otherwise announce failure. <br /> <b>OR</b>  <br />
+			  	  if <b>iterative deepening</b> selected, increment the search-depth.</li>
+			  </ol>
+			
+			<h2>Resources</h2>
+			<ul>
+				<li>http://en.wikipedia.org/wiki/Depth-limited_search</li>
+				<li>http://en.wikipedia.org/wiki/Iterative_deepening_depth-first_search</li>
+			</ul>
+			]]>
+		</topic>
+		<topic title="Dijkstra's Algorithm" id="dijkstraAlgorithm">
+			<![CDATA[
+			<h1>Dijkstra's Algorithm</h1>
+			<h2>Description</h2>
+			For a given source vertex (node) in the graph, the algorithm finds the path with lowest cost (i.e. the shortest path) between 
+			that vertex and every other vertex. It can also be used for finding costs of shortest paths from a single vertex to a single 
+			destination vertex by stopping the algorithm once the shortest path to the destination vertex has been determined. 
+			For example, if the vertices of the graph represent cities and edge path costs represent driving distances between 
+			pairs of cities connected by a direct road, Dijkstra's algorithm can be used to find the shortest route between one city 
+			and all other cities.
+			
+			<h2>Properties</h2>
+			<h3>Storage Limit</h3>
+			The <i>Storage Limit</i> can use to ajust the size of the underlying storage-datatype. The default value 0 represents an infinity amount of elements.
+			
+			<h2>Implementation</h2>
+			see <i><b>Branch and Bound Search Algorithm</b></i> with heuristic <i>both</i>.
+			  
+			<h2>Resources</h2>
+			<ul>
+				<li>http://en.wikipedia.org/wiki/Dijkstra%27s_algorithm</li>
+				<li>Artificial Intelligence (3rd Edition), Patrick H. Winston, ISBN 978-0201533774, 1993</li>
+			</ul>
+			]]>
+		</topic>
+		<topic title="Great Deluge Algorithm" id="greatDelugeAlgorithm">
+			<![CDATA[
+			<h1>Great Deluge Algorithm</h1>
+			<h2>Description</h2>
+			
+			<br /><br />
+			The <b><i>Great Deluge Algorithm</b></i> (GD) is a generic algorithm applied to optimization problems. It is similar in many ways to the hill-climbing and simulated annealing algorithms.
+			The name comes from the analogy that in a great deluge a person climbing a hill will try to move in any direction that does not get his/her feet wet in the hope of finding a way up as the water level rises.
+			These hill climbing implementation clamps an area of the selected function (see <i>Property Climbing Function</i>) over the given graph. The <i>destination</i> of the given route is the maximum of the
+			function f(x,y)=1 - where x is the horizontal and y is the vertical alignment. The Algorithm starts from the <i>start</i>-node with a given value v=f(x,y) and climbs to next nearby-node with a greater climbing-grade
+			v'. The Algorithm terminates if v' equals the <i>destination</i>-climbing-grade. 
+			
+			<h2>Properties</h2>
+				<h3>Climbing Function</h3>
+				The Property is only considered, if the <i>Heuristic</i> is selected as <i><b>Climbing</b></i>. For more information, see
+				<b><i>Hill-Climbing Algorithm</i></b>. 
+				
+				<h3>Scale Basis</h3>
+				The Property is only considered, if the <i>Heuristic</i> is selected as <i><b>Climbing</b></i>. For more information, see
+				<b><i>Hill-Climbing Algorithm</i></b>.
+				
+				<h3>Scale Factor</h3>
+				The Property is only considered, if the <i>Heuristic</i> is selected as <i><b>Climbing</b></i>. For more information, see
+				<b><i>Hill-Climbing Algorithm</i></b>.
+				
+				<h3>Gradient Factor</h3>
+				The Factor for increasing the gradient while the algorithim is running. A good value is between 0.005 and 0.015.
+			<h2>Implementation</h2>
+			<ol>
+			<li>Choose the start-node x and set a gradientfactor to k > 0.</li>
+			<li>Set fountain = 0.</li>
+			<li>Until the stack is empty or the goal has been reached, determine if the topmost element in the stack is the goal node.</li>
+				<p>3.1. Choose a node y - an immediate neighbour of x with f(y) > fountain;</p>
+				<p>3.2. x = y</p>
+				<p>3.3. fountain += k</p>
+			<li>Return x as result.</li>
+			</ol>
+			<h2>Resources</h2>
+			<ul>
+				<li>http://mume.fh-friedberg.de:6060/sirius/Sintflut/Html/Algorithmus.html</li>
+				<li>http://www.jwollbold.de/kombOpt.pdf</li>
+				<li>http://fuzzy.cs.uni-magdeburg.de/studium/ga/src/ga06t2.pdf</li>
+				<li>http://theorie.informatik.uni-ulm.de/Lehre/WS67/EvoAlgo/Referat_Endversion.pdf</li>
+				<li>http://en.wikipedia.org/wiki/Great_Deluge_algorithm</li>
+			</ul>
+			]]>
+		</topic>
+	</category>
+</help>

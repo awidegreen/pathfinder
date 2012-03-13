@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<graphPackage>
+    <backgroundImage>test_graph_big.png</backgroundImage>
+    <graphFile>test_graph_big.graph.xml</graphFile>
+</graphPackage>
